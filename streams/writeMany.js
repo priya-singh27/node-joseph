@@ -29,6 +29,11 @@ const fs = require('fs/promises');
 // })();
 
 /* Streams */
+
+
+
+
+/*...........WRONG WAY...........*/
 (async ()=>{
     console.time('flag');
 
@@ -41,4 +46,9 @@ const fs = require('fs/promises');
     }
 
     console.timeEnd('flag');
+})();
+
+(async () => {
+    const data = await fs.readFile('test.txt');
+    console.log(data);
 })();
