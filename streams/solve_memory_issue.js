@@ -10,7 +10,6 @@ import fs from 'fs/promises'
 
     const buff = Buffer.alloc(1000, 'A');// 1MB = 
 
-
     console.timeEnd('flag');
 })();
 
