@@ -1,6 +1,7 @@
 import fs from 'fs/promises'
 
 (async ()=>{
+    
     console.time('flag');
 
     const fileHandler = await fs.open('test.txt', 'w');
