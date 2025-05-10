@@ -1,4 +1,5 @@
 import fs from 'fs/promises'
+import { resolve } from 'path';
 
 (async ()=>{
     
@@ -9,7 +10,25 @@ import fs from 'fs/promises'
     const stream = fileHandler.createWriteStream();
     console.log(stream.writableHighWaterMark);//size of internal buffer(chunk)
 
-    const buff = Buffer.alloc(1000, 'A');// 1MB = 
+    // const buff = Buffer.alloc(65536, 'A');//stream.writableHighWaterMark = 65536
+    
+    // console.log(stream.write(buff));
+
+    async function writeDate() {
+        for(let i=0; i<1000000; i++){
+            const buff= Buffer.from(`${i} `,'utf-8');
+            
+            if(!stream.write(buff)){
+                //buffer was drained and it got emptied so stream.writableLength=0 => how much of this buffer is filled
+                console.log(`Draining!!`);//105
+                await new Promise(resolve=>stream.once('drain',resolve))
+            }
+        }
+    }
+
+    await writeDate();
+
+    stream.end();
 
     console.timeEnd('flag');
 })();
