@@ -16,7 +16,7 @@ import { resolve } from 'path';
 
     let i=0; 
     function writeMany() {
-        while(i<1000000){
+        while(i<100000000){
             const buff= Buffer.from(`${i} `,'utf-8');
             if(!stream.write(buff)){
                 //buffer was drained and it got emptied so stream.writableLength=0 => how much of this buffer is filled
@@ -32,7 +32,9 @@ import { resolve } from 'path';
         writeMany();
     })
 
-    console.timeEnd('flag');
+    stream.on('close',()=>{
+        console.timeEnd('flag');
+    });
 })();
 
 
