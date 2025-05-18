@@ -1,3 +1,8 @@
-streams/readable_streams/read_big.txt
-streams/copy/text-copy.txt
-streams/writable_streams/test.txt
+# Large test files
+*.txt
+# Or more specifically:
+**/streams/copy/*.txt
+**/streams/writable_streams/*.txt
+**/streams/readable_streams/*.txt
+# Keep specific small .txt files if needed by adding exceptions
+# !important_small_file.txt
