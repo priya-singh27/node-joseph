@@ -1,6 +1,7 @@
 const net = require("net");
-const { resolve } = require("path");
 const readline = require("readline/promises");
+
+let id;
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -36,7 +37,7 @@ const socket = net.createConnection({host:"127.0.0.1", port: 8080}, async ()=>{
         //clear the current line that the cursor is in 
         await clearLine(0);
         const buffer = Buffer.from(message);
-        socket.write(buffer);//send message to the server
+        socket.write(`${id}-message- ${buffer.toString('utf-8')}`);//send message to the server
     }
 
     ask();
@@ -44,10 +45,20 @@ const socket = net.createConnection({host:"127.0.0.1", port: 8080}, async ()=>{
 
     //get data from the server and then log it
     socket.on("data",async(data)=>{
+
         console.log();
         await moveCursor(0, -1);
         await clearLine(0);
-        console.log(data.toString("utf-8"));
+
+        if(data.toString("utf-8").includes("id-")){
+            //when we are getting id from server
+            id = data.toString().substring(3);
+            console.log(`Your id is ${id}!\n`); 
+        }else{
+            //when we get message from server
+            console.log(data.toString("utf-8"));
+        }
+
         ask();
     });
 });
