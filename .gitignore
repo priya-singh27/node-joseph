@@ -6,3 +6,5 @@
 **/streams/readable_streams/*.txt
 # Keep specific small .txt files if needed by adding exceptions
 # !important_small_file.txt
+
+.env

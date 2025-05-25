@@ -1,6 +1,10 @@
 const net = require("net");
 const readline = require("readline/promises");
 
+require('dotenv').config();
+const HOST = process.env.CLIENT_HOST;
+const PORT = process.env.CLIENT_PORT;
+
 let id;
 
 const rl = readline.createInterface({
@@ -25,7 +29,7 @@ const moveCursor = (dx, dy)=>{
     })
 }
 
-const socket = net.createConnection({host:"127.0.0.1", port: 8080}, async ()=>{
+const socket = net.createConnection({host:HOST, port: PORT}, async ()=>{
     console.log("Connected to the server");
 
     const ask = async()=>{
