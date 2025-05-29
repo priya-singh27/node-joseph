@@ -4,23 +4,29 @@ const fs = require('fs/promises');
 const PORT =8080;
 const HOST = '::1';
 
-let fileHandler =null;
-let fileStream = null; 
 
 const server = net.createServer((socket)=>{
     console.log("New connection!");
+    let fileHandler =null;
+    let fileStream = null; 
 
     
     socket.on('data', async (data_buffer)=>{
         //data is buffer that holds the content of the file
         if(!fileHandler){
             socket.pause();//pause receiving data from the client
-            fileHandler = await fs.open('storage/test.txt', 'w');
+
+            const indexOfDivider = data_buffer.toString().indexOf("-------");
+            const fileName = data_buffer.toString('utf-8').substring(10,indexOfDivider);
+
+            console.log(fileName);
+            fileHandler = await fs.open(`storage/${fileName}`, 'w');
             
             //create stream of this file
             fileStream = fileHandler.createWriteStream();
 
-            fileStream.write(data_buffer);
+            //writing to our destination file, discard the header= fileName: ${fileName}-------
+            fileStream.write(data_buffer.subarray(indexOfDivider+7));
 
             socket.resume();//resume receiving data from the client
 
@@ -40,7 +46,7 @@ const server = net.createServer((socket)=>{
     });
 
     socket.on('end', ()=>{//this event occuring when client-side socket closes
-        fileHandler.close();
+        if(fileHandler) fileHandler.close();
         fileHandler =null;
         fileStream=null;
         console.log(`Connection ended!`);
