@@ -2,7 +2,8 @@ const net = require("net");
 const fs = require('fs/promises');
 
 const PORT =8080;
-const HOST = '::1';
+// const HOST = '::1';
+const HOST = process.env.SERVER_HOST;
 
 
 const server = net.createServer((socket)=>{

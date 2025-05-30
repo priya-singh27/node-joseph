@@ -4,7 +4,10 @@ const path = require('path');
 const readline = require("readline/promises");
 
 const PORT =8080;
-const HOST = '::1';
+// const HOST = '::1';
+const HOST = process.env.CLIENT_HOST;
+
+
 
 const clearLine = (dir)=>{
     return new Promise((resolve,reject)=>{
