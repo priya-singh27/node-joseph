@@ -12,6 +12,7 @@ server.on("request", (request, response)=>{//request: readable stream, response:
     console.log("------HEADERS: ------");
     console.log(request.headers);
 
+    console.log("------BODY: ------");
     request.on('data', (chunk)=>{
         console.log(chunk.toString('utf-8'));
     });
