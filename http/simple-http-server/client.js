@@ -13,7 +13,7 @@ const request = http.request({//request object is a duplex stream
         /**
          * content-length: specify length of body in bytes
          * or you can specify
-         * 
+         * transfer-encoding
          */
     }
 });
