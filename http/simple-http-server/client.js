@@ -9,22 +9,34 @@ const request = http.request({//request object is a duplex stream
     method: "POST",
     path: "/create-post",
     headers:{
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
         /**
          * content-length: specify length of body in bytes
          * or you can specify
          * transfer-encoding
          */
+
+        name: "Priya"
     }
 });
 
 request.on("response", (response)=>{//this will be fired only once: 'response' is an IncomingMessage (readable stream) for the server's reply.
-    console.log(`RESPONSE: ${response}`);
+  console.log(response.statusCode);
+  console.log(response.headers);
+  response.on('data',(chunk)=>{
+    console.log(chunk.toString('utf-8'))
+  })
+
+  response.on('end', ()=>{
+    console.log("No more data in response")
+  });
 });
 
-request.write(JSON.stringify({name: "Priya", message:"How are you?"}));
+request.end(JSON.stringify({title: "RCB RCB RCB", body:"See how team reacted to this unbelievable win"}));
 
-request.end(JSON.stringify({message:"END"}));
+// request.write(JSON.stringify({title: "RCB RCB RCB"}));
+
+// request.end(JSON.stringify({body:"See how team reacted to this unbelievable win"}));
 
 
 
