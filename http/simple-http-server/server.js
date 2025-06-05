@@ -22,16 +22,12 @@ server.on("request", (request, response)=>{//request: readable stream, response:
 
     request.on('data', (chunk)=>{
         data += chunk.toString();
-        console.log(typeof data)
-
         console.log(data);
     });
 
     request.on('end', ()=>{
         data = JSON.parse(data);
-
-        console.log(typeof data)
-
+        
         console.log(data);
         console.log(name);
 
@@ -43,6 +39,7 @@ server.on("request", (request, response)=>{//request: readable stream, response:
         ))
     });
 });
+
 
 server.listen(8000, ()=>{
     console.log("Server is listening...")
