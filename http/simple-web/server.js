@@ -31,6 +31,24 @@ server.on("request", async(req,res)=>{
         //     fileHandler.close();
         // });
     }
+
+    if(req.url === '/styles.css' && req.method === 'GET'){
+        res.setHeader("content-type", "text/css");
+
+        const fileHandler = await fs.open('./public/styles.css', 'r');
+        const readStream = fileHandler.createReadStream();
+
+        readStream.pipe(res);
+    }
+
+    if(req.url === '/script.js' && req.method === 'GET'){
+        res.setHeader("content-type", "application/javascript");
+
+        const fileHandler = await fs.open('./public/script.js', 'r');
+        const readStream = fileHandler.createReadStream();
+
+        readStream.pipe(res);
+    }
 })
 
 server.listen(9000, ()=>{
