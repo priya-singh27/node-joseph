@@ -60,11 +60,25 @@ server.on("request", async(req,res)=>{
 
         res.write(JSON.stringify(body));//js object -> json string
     }
+
+    if(req.url === '/upload' && req.method === 'PUT'){
+
+        const fileHandler = await fs.open('./storage/img.png', 'w');//this will create new file in storage folder
+
+        const writeStream = fileHandler.createWriteStream();
+
+        req.pipe(writeStream);
+
+        res.setHeader("content-type", "application/javascript");
+
+        req.on('end', ()=>{//end event: when the reading is done
+            res.end(
+                JSON.stringify({message : "File uploaded successfully"})
+            );
+        });
+    }
 });
 
-server.on('connect',()=>{
-    console.log('connect event emitted');
-})
 
 server.listen(9000, ()=>{
     console.log("Listening on 9000")
