@@ -1,1 +1,2 @@
-console.log("Script.js being called!")
+console.log("Script.js being called!");
+

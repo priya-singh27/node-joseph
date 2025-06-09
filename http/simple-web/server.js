@@ -1,7 +1,7 @@
 const http = require('node:http');
 const fs = require('node:fs/promises');
 
-const server  =  http.createServer();
+const server  =  http.createServer();//extends net.server which extends EventEmitter 
 
 server.on("request", async(req,res)=>{
     if(req.url=== "/" && req.method === "GET"){
@@ -49,6 +49,21 @@ server.on("request", async(req,res)=>{
 
         readStream.pipe(res);
     }
+
+    if(req.url === '/login' && req.method === 'POST'){
+        res.setHeader("content-type", "application/javascript");
+        res.statusCode = 200;
+
+        const body = {
+            message : "User created!"
+        }//js object
+
+        res.write(JSON.stringify(body));//js object -> json string
+    }
+});
+
+server.on('connect',()=>{
+    console.log('connect event emitted');
 })
 
 server.listen(9000, ()=>{
