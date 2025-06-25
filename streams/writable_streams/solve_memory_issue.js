@@ -1,6 +1,7 @@
 import fs from 'fs/promises'
 import { resolve } from 'path';
 
+console.log(process.pid);
 (async ()=>{
     
     console.time('flag');
@@ -16,7 +17,7 @@ import { resolve } from 'path';
 
     let i=0; 
     function writeMany() {
-        while(i<100000000){
+        while(i<10000000000){
             const buff= Buffer.from(`${i} `,'utf-8');
             if(!stream.write(buff)){
                 //buffer was drained and it got emptied so stream.writableLength=0 => how much of this buffer is filled
