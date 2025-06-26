@@ -3,7 +3,9 @@ const fs = require('node:fs');
 
 console.log(`Process id of app.js: ${process.pid}`);
 
-const numberFormatter = spawn("node", ["number_formatter.js","./dest.txt", "$", ","]);
+// const numberFormatter = spawn("node", ["number_formatter.js","./dest.txt", "$", ","]);
+const numberFormatter = spawn("./number_formatter", ["./dest.txt", "$", ","]);
+
 
 numberFormatter.stdout.on('data', (data)=>{
     console.log(`stdout: ${data}`);
@@ -17,6 +19,8 @@ numberFormatter.on('close',(code)=>{
     if(code===0) console.log("The file was read, preocessed and written successfully");
     else console.log("Something went wrong");
 });
-
-const fileStream = fs.createReadStream('./test.txt');
+//  ./test.txt
+const fileStream = fs.createReadStream("./test.txt");
 fileStream.pipe(numberFormatter.stdin);
+
+
