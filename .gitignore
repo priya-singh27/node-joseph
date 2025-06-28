@@ -8,3 +8,5 @@
 # !important_small_file.txt
 
 .env
+node_modules
+
